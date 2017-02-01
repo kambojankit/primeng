@@ -137,3 +137,14 @@
 .ui-fluid .ui-autocomplete .ui-autocomplete-dropdown.ui-button {
     width: 2em;
 }
+
+
+div.ui-autocomplete-panel-cat {
+    float: left;
+    clear: none;
+}
+
+div.ui-autocomplete-panel-options {
+    float: left;
+    clear: none;
+}
