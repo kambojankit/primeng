@@ -34,7 +34,7 @@ export const AUTOCOMPLETE_VALUE_ACCESSOR: any = {
             <div class="ui-autocomplete-panel ui-widget-content ui-corner-all ui-shadow" [style.display]="panelVisible ? 'block' : 'none'" [style.width]="appendTo ? 'auto' : '100%'" [style.max-height]="scrollHeight">
                 <div style="overflow: hidden; ">
                     <div style="padding-top: .4em; background: #eee; float: left; clear: none; width:25%; padding-bottom: 500em; margin-bottom: -500em; display: table; border-right: 1px solid darkgrey;">
-                        <span style="display: table-cell; vertical-align: middle; text-align: center;">Topics</span>
+                        <span style="font-size: 18px; display: table-cell; vertical-align: middle; text-align: center;">Topics</span>
                     </div>
                     <div style="align-content: center; float: left; clear: none; width:75%; padding-bottom: 500em; margin-bottom: -500em;  margin-right: -1px;">
                         <ul class="ui-autocomplete-items ui-autocomplete-list ui-widget-content ui-widget ui-corner-all ui-helper-reset">

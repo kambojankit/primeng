@@ -25,12 +25,10 @@ resources/images
 aot
 components/**/*.metadata.json
 
-# misc 
+# misc
 *.log
 *.iml
 .DS_STORE
 .idea
 .vscode
 .sass-cache
-
-primeng.iml
