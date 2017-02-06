@@ -27,6 +27,7 @@ components/**/*.metadata.json
 
 # misc 
 *.log
+*.iml
 .DS_STORE
 .idea
 .vscode
