@@ -38,8 +38,7 @@ export const AUTOCOMPLETE_VALUE_ACCESSOR: any = {
                     </div>
                     <div style="align-content: center; float: left; clear: none; width:75%; padding-bottom: 500em; margin-bottom: -500em;  margin-right: -1px;">
                         <ul class="ui-autocomplete-items ui-autocomplete-list ui-widget-content ui-widget ui-corner-all ui-helper-reset">
-                            <li *ngFor="let option of suggestions" [ngClass]="{'ui-autocomplete-list-item ui-corner-all':true,'ui-state-highlight':(highlightOption==option)}"
-                                (mouseenter)="highlightOption=option" (mouseleave)="highlightOption=null" (click)="selectItem(option)">
+                            <li *ngFor="let option of suggestions">
                                 <span *ngIf="!itemTemplate">{{field ? option[field] : option}}</span>
                                 <template *ngIf="itemTemplate" [pTemplateWrapper]="itemTemplate" [item]="option"></template>
                             </li>
