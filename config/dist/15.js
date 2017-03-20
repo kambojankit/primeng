@@ -1,1 +1,1119 @@
-webpackJsonp([15],{62:function(e,t,n){"use strict";var o=this&&this.__decorate||function(e,t,n,o){var i,r=arguments.length,l=r<3?t:null===o?o=Object.getOwnPropertyDescriptor(t,n):o;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)l=Reflect.decorate(e,t,n,o);else for(var a=e.length-1;a>=0;a--)(i=e[a])&&(l=(r<3?i(l):r>3?i(t,n,l):i(t,n))||l);return r>3&&l&&Object.defineProperty(t,n,l),l},i=this&&this.__metadata||function(e,t){if("object"==typeof Reflect&&"function"==typeof Reflect.metadata)return Reflect.metadata(e,t)};Object.defineProperty(t,"__esModule",{value:!0});var r=n(2),l=n(26),a=function(){function CodeHighlighter(e){this.el=e}return CodeHighlighter.prototype.ngOnInit=function(){Prism.highlightElement(this.el.nativeElement)},CodeHighlighter}();a=o([r.Directive({selector:"[pCode]"}),i("design:paramtypes",[r.ElementRef])],a),t.CodeHighlighter=a;var s=function(){function CodeHighlighterModule(){}return CodeHighlighterModule}();s=o([r.NgModule({imports:[l.CommonModule],exports:[a],declarations:[a]})],s),t.CodeHighlighterModule=s},71:function(e,t,n){"use strict";var o=this&&this.__decorate||function(e,t,n,o){var i,r=arguments.length,l=r<3?t:null===o?o=Object.getOwnPropertyDescriptor(t,n):o;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)l=Reflect.decorate(e,t,n,o);else for(var a=e.length-1;a>=0;a--)(i=e[a])&&(l=(r<3?i(l):r>3?i(t,n,l):i(t,n))||l);return r>3&&l&&Object.defineProperty(t,n,l),l},i=this&&this.__metadata||function(e,t){if("object"==typeof Reflect&&"function"==typeof Reflect.metadata)return Reflect.metadata(e,t)};Object.defineProperty(t,"__esModule",{value:!0});var r=n(2),l=n(26),a=function(){function TabViewNav(){this.orientation="top",this.onTabClick=new r.EventEmitter,this.onTabCloseClick=new r.EventEmitter}return TabViewNav.prototype.getDefaultHeaderClass=function(e){var t="ui-state-default ui-corner-"+this.orientation;return e.headerStyleClass&&(t=t+" "+e.headerStyleClass),t},TabViewNav.prototype.clickTab=function(e,t){this.onTabClick.emit({originalEvent:e,tab:t})},TabViewNav.prototype.clickClose=function(e,t){this.onTabCloseClick.emit({originalEvent:e,tab:t})},TabViewNav}();o([r.Input(),i("design:type",Array)],a.prototype,"tabs",void 0),o([r.Input(),i("design:type",String)],a.prototype,"orientation",void 0),o([r.Output(),i("design:type",r.EventEmitter)],a.prototype,"onTabClick",void 0),o([r.Output(),i("design:type",r.EventEmitter)],a.prototype,"onTabCloseClick",void 0),a=o([r.Component({selector:"[p-tabViewNav]",host:{"[class.ui-tabview-nav]":"true","[class.ui-helper-reset]":"true","[class.ui-helper-clearfix]":"true","[class.ui-widget-header]":"true","[class.ui-corner-all]":"true"},template:'\n        <template ngFor let-tab [ngForOf]="tabs">\n            <li [class]="getDefaultHeaderClass(tab)" [ngStyle]="tab.headerStyle" role="tab"\n                [ngClass]="{\'ui-tabview-selected ui-state-active\': tab.selected, \'ui-state-disabled\': tab.disabled}"\n                (click)="clickTab($event,tab)" *ngIf="!tab.closed"\n                [attr.aria-expanded]="tab.selected" [attr.aria-selected]="tab.selected">\n                <a href="#">\n                    <span class="ui-tabview-left-icon fa" [ngClass]="tab.leftIcon" *ngIf="tab.leftIcon"></span>\n                    <span class="ui-tabview-title">{{tab.header}}</span>\n                    <span class="ui-tabview-right-icon fa" [ngClass]="tab.rightIcon" *ngIf="tab.rightIcon"></span>\n                </a>\n                <span *ngIf="tab.closable" class="ui-tabview-close fa fa-close" (click)="clickClose($event,tab)"></span>\n            </li>\n        </template>\n    '})],a),t.TabViewNav=a;var s=function(){function TabPanel(){}return TabPanel}();o([r.Input(),i("design:type",String)],s.prototype,"header",void 0),o([r.Input(),i("design:type",Boolean)],s.prototype,"selected",void 0),o([r.Input(),i("design:type",Boolean)],s.prototype,"disabled",void 0),o([r.Input(),i("design:type",Boolean)],s.prototype,"closable",void 0),o([r.Input(),i("design:type",Object)],s.prototype,"headerStyle",void 0),o([r.Input(),i("design:type",String)],s.prototype,"headerStyleClass",void 0),o([r.Input(),i("design:type",String)],s.prototype,"leftIcon",void 0),o([r.Input(),i("design:type",String)],s.prototype,"rightIcon",void 0),s=o([r.Component({selector:"p-tabPanel",template:'\n        <div class="ui-tabview-panel ui-widget-content" [style.display]="selected ? \'block\' : \'none\'" \n            role="tabpanel" [attr.aria-hidden]="!selected" *ngIf="closed ? false : (lazy ? selected : true)">\n            <ng-content></ng-content>\n        </div>\n    '})],s),t.TabPanel=s;var d=function(){function TabView(e){this.el=e,this.orientation="top",this.onChange=new r.EventEmitter,this.onClose=new r.EventEmitter}return TabView.prototype.ngAfterContentInit=function(){var e=this;this.initTabs(),this.tabPanels.changes.subscribe(function(t){e.initTabs()})},TabView.prototype.initTabs=function(){this.tabs=this.tabPanels.toArray();for(var e=0,t=this.tabs;e<t.length;e++){var n=t[e];n.lazy=this.lazy}var o=this.findSelectedTab();!o&&this.tabs.length&&(this.tabs[0].selected=!0)},TabView.prototype.open=function(e,t){if(t.disabled)return void e.preventDefault();if(!t.selected){var n=this.findSelectedTab();n&&(n.selected=!1),t.selected=!0,this.onChange.emit({originalEvent:e,index:this.findTabIndex(t)})}e.preventDefault()},TabView.prototype.close=function(e,t){var n=this;this.controlClose?this.onClose.emit({originalEvent:e,index:this.findTabIndex(t),close:function(){n.closeTab(t)}}):(this.closeTab(t),this.onClose.emit({originalEvent:e,index:this.findTabIndex(t)})),e.stopPropagation()},TabView.prototype.closeTab=function(e){if(e.selected){e.selected=!1;for(var t=0;t<this.tabs.length;t++){var n=this.tabs[t];if(!n.closed&&!e.disabled){n.selected=!0;break}}}e.closed=!0},TabView.prototype.findSelectedTab=function(){for(var e=0;e<this.tabs.length;e++)if(this.tabs[e].selected)return this.tabs[e];return null},TabView.prototype.findTabIndex=function(e){for(var t=-1,n=0;n<this.tabs.length;n++)if(this.tabs[n]==e){t=n;break}return t},TabView.prototype.getBlockableElement=function(){return this.el.nativeElement.children[0]},TabView}();o([r.Input(),i("design:type",String)],d.prototype,"orientation",void 0),o([r.Input(),i("design:type",Object)],d.prototype,"style",void 0),o([r.Input(),i("design:type",String)],d.prototype,"styleClass",void 0),o([r.Input(),i("design:type",Boolean)],d.prototype,"controlClose",void 0),o([r.Input(),i("design:type",Boolean)],d.prototype,"lazy",void 0),o([r.ContentChildren(s),i("design:type",r.QueryList)],d.prototype,"tabPanels",void 0),o([r.Output(),i("design:type",r.EventEmitter)],d.prototype,"onChange",void 0),o([r.Output(),i("design:type",r.EventEmitter)],d.prototype,"onClose",void 0),d=o([r.Component({selector:"p-tabView",template:'\n        <div [ngClass]="\'ui-tabview ui-widget ui-widget-content ui-corner-all ui-tabview-\' + orientation" [ngStyle]="style" [class]="styleClass">\n            <ul p-tabViewNav role="tablist" *ngIf="orientation!=\'bottom\'" [tabs]="tabs" [orientation]="orientation" \n                (onTabClick)="open($event.originalEvent, $event.tab)" (onTabCloseClick)="close($event.originalEvent, $event.tab)"></ul>\n            <div class="ui-tabview-panels">\n                <ng-content></ng-content>\n            </div>\n            <ul p-tabViewNav role="tablist" *ngIf="orientation==\'bottom\'" [tabs]="tabs" [orientation]="orientation"\n                (onTabClick)="open($event.originalEvent, $event.tab)" (onTabCloseClick)="close($event.originalEvent, $event.tab)"></ul>\n        </div>\n    '}),i("design:paramtypes",[r.ElementRef])],d),t.TabView=d;var c=function(){function TabViewModule(){}return TabViewModule}();c=o([r.NgModule({imports:[l.CommonModule],exports:[d,s,a],declarations:[d,s,a]})],c),t.TabViewModule=c},73:function(e,t,n){"use strict";var o=this&&this.__decorate||function(e,t,n,o){var i,r=arguments.length,l=r<3?t:null===o?o=Object.getOwnPropertyDescriptor(t,n):o;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)l=Reflect.decorate(e,t,n,o);else for(var a=e.length-1;a>=0;a--)(i=e[a])&&(l=(r<3?i(l):r>3?i(t,n,l):i(t,n))||l);return r>3&&l&&Object.defineProperty(t,n,l),l};Object.defineProperty(t,"__esModule",{value:!0});var i=n(2),r=function(){function DomHandler(){}return DomHandler.prototype.addClass=function(e,t){e.classList?e.classList.add(t):e.className+=" "+t},DomHandler.prototype.addMultipleClasses=function(e,t){if(e.classList)for(var n=t.split(" "),o=0;o<n.length;o++)e.classList.add(n[o]);else for(var n=t.split(" "),o=0;o<n.length;o++)e.className+=" "+n[o]},DomHandler.prototype.removeClass=function(e,t){e.classList?e.classList.remove(t):e.className=e.className.replace(new RegExp("(^|\\b)"+t.split(" ").join("|")+"(\\b|$)","gi")," ")},DomHandler.prototype.hasClass=function(e,t){return e.classList?e.classList.contains(t):new RegExp("(^| )"+t+"( |$)","gi").test(e.className)},DomHandler.prototype.siblings=function(e){return Array.prototype.filter.call(e.parentNode.children,function(t){return t!==e})},DomHandler.prototype.find=function(e,t){return e.querySelectorAll(t)},DomHandler.prototype.findSingle=function(e,t){return e.querySelector(t)},DomHandler.prototype.index=function(e){for(var t=e.parentNode.childNodes,n=0,o=0;o<t.length;o++){if(t[o]==e)return n;1==t[o].nodeType&&n++}return-1},DomHandler.prototype.relativePosition=function(e,t){var n,o,i=e.offsetParent?{width:e.outerWidth,height:e.outerHeight}:this.getHiddenElementDimensions(e),r=t.offsetHeight,l=t.offsetWidth,a=t.getBoundingClientRect(),s=this.getViewport();n=a.top+r+i.height>s.height?-1*i.height:r,o=a.left+i.width>s.width?l-i.width:0,e.style.top=n+"px",e.style.left=o+"px"},DomHandler.prototype.absolutePosition=function(e,t){var n,o,i=e.offsetParent?{width:e.offsetWidth,height:e.offsetHeight}:this.getHiddenElementDimensions(e),r=i.height,l=i.width,a=t.offsetHeight,s=t.offsetWidth,d=t.getBoundingClientRect(),c=this.getWindowScrollTop(),u=this.getWindowScrollLeft(),p=this.getViewport();n=d.top+a+r>p.height?d.top+c-r:a+d.top+c,o=d.left+s+l>p.width?d.left+u+s-l:d.left+u,e.style.top=n+"px",e.style.left=o+"px"},DomHandler.prototype.getHiddenElementOuterHeight=function(e){e.style.visibility="hidden",e.style.display="block";var t=e.offsetHeight;return e.style.display="none",e.style.visibility="visible",t},DomHandler.prototype.getHiddenElementOuterWidth=function(e){e.style.visibility="hidden",e.style.display="block";var t=e.offsetWidth;return e.style.display="none",e.style.visibility="visible",t},DomHandler.prototype.getHiddenElementDimensions=function(e){var t={};return e.style.visibility="hidden",e.style.display="block",t.width=e.offsetWidth,t.height=e.offsetHeight,e.style.display="none",e.style.visibility="visible",t},DomHandler.prototype.scrollInView=function(e,t){var n=getComputedStyle(e).getPropertyValue("borderTopWidth"),o=n?parseFloat(n):0,i=getComputedStyle(e).getPropertyValue("paddingTop"),r=i?parseFloat(i):0,l=e.getBoundingClientRect(),a=t.getBoundingClientRect(),s=a.top+document.body.scrollTop-(l.top+document.body.scrollTop)-o-r,d=e.scrollTop,c=e.clientHeight,u=this.getOuterHeight(t);s<0?e.scrollTop=d+s:s+u>c&&(e.scrollTop=d+s-c+u)},DomHandler.prototype.fadeIn=function(e,t){e.style.opacity=0;var n=+new Date,o=0,i=function(){o=+e.style.opacity+((new Date).getTime()-n)/t,e.style.opacity=o,n=+new Date,+o<1&&(window.requestAnimationFrame&&requestAnimationFrame(i)||setTimeout(i,16))};i()},DomHandler.prototype.fadeOut=function(e,t){var n=1,o=50,i=t,r=o/i,l=setInterval(function(){n-=r,n<=0&&(n=0,clearInterval(l)),e.style.opacity=n},o)},DomHandler.prototype.getWindowScrollTop=function(){var e=document.documentElement;return(window.pageYOffset||e.scrollTop)-(e.clientTop||0)},DomHandler.prototype.getWindowScrollLeft=function(){var e=document.documentElement;return(window.pageXOffset||e.scrollLeft)-(e.clientLeft||0)},DomHandler.prototype.matches=function(e,t){var n=Element.prototype,o=n.matches||n.webkitMatchesSelector||n.mozMatchesSelector||n.msMatchesSelector||function(e){return[].indexOf.call(document.querySelectorAll(e),this)!==-1};return o.call(e,t)},DomHandler.prototype.getOuterWidth=function(e,t){var n=e.offsetWidth;if(t){var o=getComputedStyle(e);n+=parseFloat(o.marginLeft)+parseFloat(o.marginRight)}return n},DomHandler.prototype.getHorizontalPadding=function(e){var t=getComputedStyle(e);return parseFloat(t.paddingLeft)+parseFloat(t.paddingRight)},DomHandler.prototype.getHorizontalMargin=function(e){var t=getComputedStyle(e);return parseFloat(t.marginLeft)+parseFloat(t.marginRight)},DomHandler.prototype.innerWidth=function(e){var t=e.offsetWidth,n=getComputedStyle(e);return t+=parseFloat(n.paddingLeft)+parseFloat(n.paddingRight)},DomHandler.prototype.width=function(e){var t=e.offsetWidth,n=getComputedStyle(e);return t-=parseFloat(n.paddingLeft)+parseFloat(n.paddingRight)},DomHandler.prototype.getOuterHeight=function(e,t){var n=e.offsetHeight;if(t){var o=getComputedStyle(e);n+=parseFloat(o.marginTop)+parseFloat(o.marginBottom)}return n},DomHandler.prototype.getHeight=function(e){var t=e.offsetHeight,n=getComputedStyle(e);return t-=parseFloat(n.paddingTop)+parseFloat(n.paddingBottom)+parseFloat(n.borderTopWidth)+parseFloat(n.borderBottomWidth)},DomHandler.prototype.getWidth=function(e){var t=e.offsetWidth,n=getComputedStyle(e);return t-=parseFloat(n.paddingLeft)+parseFloat(n.paddingRight)+parseFloat(n.borderLeftWidth)+parseFloat(n.borderRightWidth)},DomHandler.prototype.getViewport=function(){var e=window,t=document,n=t.documentElement,o=t.getElementsByTagName("body")[0],i=e.innerWidth||n.clientWidth||o.clientWidth,r=e.innerHeight||n.clientHeight||o.clientHeight;return{width:i,height:r}},DomHandler.prototype.getOffset=function(e){for(var t=e.offsetLeft,n=e.offsetTop;e=e.offsetParent;)t+=e.offsetLeft,n+=e.offsetTop;return{left:t,top:n}},DomHandler.prototype.equals=function(e,t){if(null==e&&null==t)return!0;if(null==e||null==t)return!1;if(e==t)return delete e._$visited,!0;if("object"==typeof e&&"object"==typeof t){e._$visited=!0;for(var n in e)if("_$visited"!==n){if(e.hasOwnProperty(n)!==t.hasOwnProperty(n))return!1;switch(typeof e[n]){case"object":if(e[n]&&e[n]._$visited||!this.equals(e[n],t[n]))return!1;break;case"function":if("undefined"==typeof t[n]||"compare"!=n&&e[n].toString()!=t[n].toString())return!1;break;default:if(e[n]!=t[n])return!1}}for(var n in t)if("undefined"==typeof e[n])return!1;return delete e._$visited,!0}return!1},DomHandler.prototype.getUserAgent=function(){return navigator.userAgent},DomHandler.prototype.isIE=function(){var e=window.navigator.userAgent,t=e.indexOf("MSIE ");if(t>0)return!0;var n=e.indexOf("Trident/");if(n>0){e.indexOf("rv:");return!0}var o=e.indexOf("Edge/");return o>0},DomHandler.prototype.appendChild=function(e,t){if(this.isElement(t))t.appendChild(e);else{if(!t.el||!t.el.nativeElement)throw"Cannot append "+t+" to "+e;t.el.nativeElement.appendChild(e)}},DomHandler.prototype.removeChild=function(e,t){if(this.isElement(t))t.removeChild(e);else{if(!t.el||!t.el.nativeElement)throw"Cannot remove "+e+" from "+t;t.el.nativeElement.removeChild(e)}},DomHandler.prototype.isElement=function(e){return"object"==typeof HTMLElement?e instanceof HTMLElement:e&&"object"==typeof e&&null!==e&&1===e.nodeType&&"string"==typeof e.nodeName},DomHandler.prototype.calculateScrollbarWidth=function(){var e=document.createElement("div");e.className="ui-scrollbar-measure",document.body.appendChild(e);var t=e.offsetWidth-e.clientWidth;return document.body.removeChild(e),t},DomHandler}();r.zindex=1e3,r=o([i.Injectable()],r),t.DomHandler=r},127:function(e,t,n){"use strict";var o=this&&this.__decorate||function(e,t,n,o){var i,r=arguments.length,l=r<3?t:null===o?o=Object.getOwnPropertyDescriptor(t,n):o;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)l=Reflect.decorate(e,t,n,o);else for(var a=e.length-1;a>=0;a--)(i=e[a])&&(l=(r<3?i(l):r>3?i(t,n,l):i(t,n))||l);return r>3&&l&&Object.defineProperty(t,n,l),l};Object.defineProperty(t,"__esModule",{value:!0});var i=n(2),r=n(26),l=n(128),a=n(129),s=n(130),d=n(71),c=n(62),u=function(){function ContextMenuDemoModule(){}return ContextMenuDemoModule}();u=o([i.NgModule({imports:[r.CommonModule,a.ContextMenuDemoRoutingModule,s.ContextMenuModule,d.TabViewModule,c.CodeHighlighterModule],declarations:[l.ContextMenuDemo]})],u),t.ContextMenuDemoModule=u},128:function(e,t,n){"use strict";var o=this&&this.__decorate||function(e,t,n,o){var i,r=arguments.length,l=r<3?t:null===o?o=Object.getOwnPropertyDescriptor(t,n):o;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)l=Reflect.decorate(e,t,n,o);else for(var a=e.length-1;a>=0;a--)(i=e[a])&&(l=(r<3?i(l):r>3?i(t,n,l):i(t,n))||l);return r>3&&l&&Object.defineProperty(t,n,l),l};Object.defineProperty(t,"__esModule",{value:!0});var i=n(2),r=function(){function ContextMenuDemo(){}return ContextMenuDemo.prototype.ngOnInit=function(){this.items=[{label:"File",icon:"fa-file-o",items:[{label:"New",icon:"fa-plus",items:[{label:"Project"},{label:"Other"}]},{label:"Open"},{label:"Quit"}]},{label:"Edit",icon:"fa-edit",items:[{label:"Undo",icon:"fa-mail-forward"},{label:"Redo",icon:"fa-mail-reply"}]},{label:"Help",icon:"fa-question",items:[{label:"Contents"},{label:"Search",icon:"fa-search",items:[{label:"Text",items:[{label:"Workspace"}]},{label:"File"}]}]},{label:"Actions",icon:"fa-gear",items:[{label:"Edit",icon:"fa-refresh",items:[{label:"Save",icon:"fa-save"},{label:"Update",icon:"fa-save"}]},{label:"Other",icon:"fa-phone",items:[{label:"Delete",icon:"fa-minus"}]}]},{label:"Quit",icon:"fa-minus"}]},ContextMenuDemo}();r=o([i.Component({templateUrl:"showcase/demo/contextmenu/contextmenudemo.html"})],r),t.ContextMenuDemo=r},129:function(e,t,n){"use strict";var o=this&&this.__decorate||function(e,t,n,o){var i,r=arguments.length,l=r<3?t:null===o?o=Object.getOwnPropertyDescriptor(t,n):o;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)l=Reflect.decorate(e,t,n,o);else for(var a=e.length-1;a>=0;a--)(i=e[a])&&(l=(r<3?i(l):r>3?i(t,n,l):i(t,n))||l);return r>3&&l&&Object.defineProperty(t,n,l),l};Object.defineProperty(t,"__esModule",{value:!0});var i=n(2),r=n(28),l=n(128),a=function(){function ContextMenuDemoRoutingModule(){}return ContextMenuDemoRoutingModule}();a=o([i.NgModule({imports:[r.RouterModule.forChild([{path:"",component:l.ContextMenuDemo}])],exports:[r.RouterModule]})],a),t.ContextMenuDemoRoutingModule=a},130:function(e,t,n){"use strict";var o=this&&this.__decorate||function(e,t,n,o){var i,r=arguments.length,l=r<3?t:null===o?o=Object.getOwnPropertyDescriptor(t,n):o;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)l=Reflect.decorate(e,t,n,o);else for(var a=e.length-1;a>=0;a--)(i=e[a])&&(l=(r<3?i(l):r>3?i(t,n,l):i(t,n))||l);return r>3&&l&&Object.defineProperty(t,n,l),l},i=this&&this.__metadata||function(e,t){if("object"==typeof Reflect&&"function"==typeof Reflect.metadata)return Reflect.metadata(e,t)},r=this&&this.__param||function(e,t){return function(n,o){t(n,o,e)}};Object.defineProperty(t,"__esModule",{value:!0});var l=n(2),a=n(26),s=n(73),d=n(28),c=function(){function ContextMenuSub(e,t,n){this.domHandler=e,this.router=t,this.contextMenu=n}return ContextMenuSub.prototype.onItemMouseEnter=function(e,t,n){if(!n.disabled){this.activeItem=t;var o=t.children[0].nextElementSibling;if(o){var i=o.children[0];i.style.zIndex=++s.DomHandler.zindex,this.position(i,t)}}},ContextMenuSub.prototype.onItemMouseLeave=function(e,t){this.activeItem=null},ContextMenuSub.prototype.itemClick=function(e,t){return t.disabled?void e.preventDefault():(t.url&&!t.routerLink||e.preventDefault(),t.command&&(t.eventEmitter||(t.eventEmitter=new l.EventEmitter,t.eventEmitter.subscribe(t.command)),t.eventEmitter.emit({originalEvent:e,item:t})),void(t.routerLink&&this.router.navigate(t.routerLink)))},ContextMenuSub.prototype.listClick=function(e){this.activeItem=null},ContextMenuSub.prototype.position=function(e,t){this.containerLeft=this.domHandler.getOffset(t.parentElement);var n=this.domHandler.getViewport(),o=e.offsetParent?e.offsetWidth:this.domHandler.getHiddenElementOuterWidth(e),i=this.domHandler.getOuterWidth(t.children[0]);e.style.top="0px",parseInt(this.containerLeft.left)+i+o>n.width-this.calculateScrollbarWidth()?e.style.left=-o+"px":e.style.left=i+"px"},ContextMenuSub.prototype.calculateScrollbarWidth=function(){var e=document.createElement("div");e.className="ui-scrollbar-measure",document.body.appendChild(e);var t=e.offsetWidth-e.clientWidth;return document.body.removeChild(e),t},ContextMenuSub}();o([l.Input(),i("design:type",Object)],c.prototype,"item",void 0),o([l.Input(),i("design:type",Boolean)],c.prototype,"root",void 0),c=o([l.Component({selector:"p-contextMenuSub",template:'\n        <ul [ngClass]="{\'ui-helper-reset\':root, \'ui-widget-content ui-corner-all ui-helper-clearfix ui-menu-child ui-shadow\':!root}" class="ui-menu-list"\n            (click)="listClick($event)">\n            <template ngFor let-child [ngForOf]="(root ? item : item.items)">\n                <li #item [ngClass]="{\'ui-menuitem ui-widget ui-corner-all\':true,\'ui-menu-parent\':child.items,\'ui-menuitem-active\':item==activeItem}"\n                    (mouseenter)="onItemMouseEnter($event,item,child)" (mouseleave)="onItemMouseLeave($event,item)">\n                    <a [href]="child.url||\'#\'" class="ui-menuitem-link ui-corner-all" \n                        [ngClass]="{\'ui-state-disabled\':child.disabled}" (click)="itemClick($event, child)">\n                        <span class="ui-submenu-icon fa fa-fw fa-caret-right" *ngIf="child.items"></span>\n                        <span class="ui-menuitem-icon fa fa-fw" *ngIf="child.icon" [ngClass]="child.icon"></span>\n                        <span class="ui-menuitem-text">{{child.label}}</span>\n                    </a>\n                    <p-contextMenuSub class="ui-submenu" [item]="child" *ngIf="child.items"></p-contextMenuSub>\n                </li>\n            </template>\n        </ul>\n    ',providers:[s.DomHandler]}),r(2,l.Inject(l.forwardRef(function(){return u}))),i("design:paramtypes",[s.DomHandler,d.Router,u])],c),t.ContextMenuSub=c;var u=function(){function ContextMenu(e,t,n){this.el=e,this.domHandler=t,this.renderer=n}return ContextMenu.prototype.ngAfterViewInit=function(){var e=this;this.container=this.containerViewChild.nativeElement,this.documentClickListener=this.renderer.listenGlobal("body","click",function(){e.hide()}),this.global&&(this.documentRightClickListener=this.renderer.listenGlobal("body","contextmenu",function(t){e.show(t),t.preventDefault()})),this.appendTo&&("body"===this.appendTo?document.body.appendChild(this.el.nativeElement):this.domHandler.appendChild(this.el.nativeElement,this.appendTo))},ContextMenu.prototype.show=function(e){this.position(e),this.visible=!0,this.domHandler.fadeIn(this.container,250),e&&e.preventDefault()},ContextMenu.prototype.hide=function(){this.visible=!1},ContextMenu.prototype.toggle=function(e){this.visible?this.hide():this.show(e)},ContextMenu.prototype.position=function(e){if(e){var t=e.pageX,n=e.pageY,o=this.container.offsetParent?this.container.offsetWidth:this.domHandler.getHiddenElementOuterWidth(this.container),i=this.container.offsetParent?this.container.offsetHeight:this.domHandler.getHiddenElementOuterHeight(this.container),r=this.domHandler.getViewport();t+o-document.body.scrollLeft>r.width&&(t-=o),n+i-document.body.scrollTop>r.height&&(n-=i),t<document.body.scrollLeft&&(t=document.body.scrollLeft),n<document.body.scrollTop&&(n=document.body.scrollTop),this.container.style.left=t+"px",this.container.style.top=n+"px"}},ContextMenu.prototype.unsubscribe=function(e){if(e.eventEmitter&&e.eventEmitter.unsubscribe(),e.items)for(var t=0,n=e.items;t<n.length;t++){var o=n[t];this.unsubscribe(o)}},ContextMenu.prototype.ngOnDestroy=function(){if(this.documentClickListener(),this.global&&this.documentRightClickListener(),this.model)for(var e=0,t=this.model;e<t.length;e++){var n=t[e];this.unsubscribe(n)}this.appendTo&&this.el.nativeElement.appendChild(this.container)},ContextMenu}();o([l.Input(),i("design:type",Array)],u.prototype,"model",void 0),o([l.Input(),i("design:type",Boolean)],u.prototype,"global",void 0),o([l.Input(),i("design:type",Object)],u.prototype,"style",void 0),o([l.Input(),i("design:type",String)],u.prototype,"styleClass",void 0),o([l.Input(),i("design:type",Object)],u.prototype,"appendTo",void 0),o([l.ViewChild("container"),i("design:type",l.ElementRef)],u.prototype,"containerViewChild",void 0),u=o([l.Component({selector:"p-contextMenu",template:'\n        <div #container [ngClass]="\'ui-contextmenu ui-menu ui-widget ui-widget-content ui-corner-all ui-helper-clearfix ui-menu-dynamic ui-shadow\'" \n            [class]="styleClass" [ngStyle]="style" [style.display]="visible ? \'block\' : \'none\'">\n            <p-contextMenuSub [item]="model" root="root"></p-contextMenuSub>\n        </div>\n    ',providers:[s.DomHandler]}),i("design:paramtypes",[l.ElementRef,s.DomHandler,l.Renderer])],u),t.ContextMenu=u;var p=function(){function ContextMenuModule(){}return ContextMenuModule}();p=o([l.NgModule({imports:[a.CommonModule],exports:[u],declarations:[u,c]})],p),t.ContextMenuModule=p}});
+webpackJsonp([15],{
+
+/***/ 63:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	Object.defineProperty(exports, "__esModule", { value: true });
+	var core_1 = __webpack_require__(3);
+	var common_1 = __webpack_require__(27);
+	var CodeHighlighter = (function () {
+	    function CodeHighlighter(el) {
+	        this.el = el;
+	    }
+	    CodeHighlighter.prototype.ngOnInit = function () {
+	        Prism.highlightElement(this.el.nativeElement);
+	    };
+	    return CodeHighlighter;
+	}());
+	CodeHighlighter = __decorate([
+	    core_1.Directive({
+	        selector: '[pCode]'
+	    }),
+	    __metadata("design:paramtypes", [core_1.ElementRef])
+	], CodeHighlighter);
+	exports.CodeHighlighter = CodeHighlighter;
+	var CodeHighlighterModule = (function () {
+	    function CodeHighlighterModule() {
+	    }
+	    return CodeHighlighterModule;
+	}());
+	CodeHighlighterModule = __decorate([
+	    core_1.NgModule({
+	        imports: [common_1.CommonModule],
+	        exports: [CodeHighlighter],
+	        declarations: [CodeHighlighter]
+	    })
+	], CodeHighlighterModule);
+	exports.CodeHighlighterModule = CodeHighlighterModule;
+
+
+/***/ },
+
+/***/ 72:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	Object.defineProperty(exports, "__esModule", { value: true });
+	var core_1 = __webpack_require__(3);
+	var common_1 = __webpack_require__(27);
+	var TabViewNav = (function () {
+	    function TabViewNav() {
+	        this.orientation = 'top';
+	        this.onTabClick = new core_1.EventEmitter();
+	        this.onTabCloseClick = new core_1.EventEmitter();
+	    }
+	    TabViewNav.prototype.getDefaultHeaderClass = function (tab) {
+	        var styleClass = 'ui-state-default ui-corner-' + this.orientation;
+	        if (tab.headerStyleClass) {
+	            styleClass = styleClass + " " + tab.headerStyleClass;
+	        }
+	        return styleClass;
+	    };
+	    TabViewNav.prototype.clickTab = function (event, tab) {
+	        this.onTabClick.emit({
+	            originalEvent: event,
+	            tab: tab
+	        });
+	    };
+	    TabViewNav.prototype.clickClose = function (event, tab) {
+	        this.onTabCloseClick.emit({
+	            originalEvent: event,
+	            tab: tab
+	        });
+	    };
+	    return TabViewNav;
+	}());
+	__decorate([
+	    core_1.Input(),
+	    __metadata("design:type", Array)
+	], TabViewNav.prototype, "tabs", void 0);
+	__decorate([
+	    core_1.Input(),
+	    __metadata("design:type", String)
+	], TabViewNav.prototype, "orientation", void 0);
+	__decorate([
+	    core_1.Output(),
+	    __metadata("design:type", core_1.EventEmitter)
+	], TabViewNav.prototype, "onTabClick", void 0);
+	__decorate([
+	    core_1.Output(),
+	    __metadata("design:type", core_1.EventEmitter)
+	], TabViewNav.prototype, "onTabCloseClick", void 0);
+	TabViewNav = __decorate([
+	    core_1.Component({
+	        selector: '[p-tabViewNav]',
+	        host: {
+	            '[class.ui-tabview-nav]': 'true',
+	            '[class.ui-helper-reset]': 'true',
+	            '[class.ui-helper-clearfix]': 'true',
+	            '[class.ui-widget-header]': 'true',
+	            '[class.ui-corner-all]': 'true'
+	        },
+	        template: "\n        <template ngFor let-tab [ngForOf]=\"tabs\">\n            <li [class]=\"getDefaultHeaderClass(tab)\" [ngStyle]=\"tab.headerStyle\" role=\"tab\"\n                [ngClass]=\"{'ui-tabview-selected ui-state-active': tab.selected, 'ui-state-disabled': tab.disabled}\"\n                (click)=\"clickTab($event,tab)\" *ngIf=\"!tab.closed\"\n                [attr.aria-expanded]=\"tab.selected\" [attr.aria-selected]=\"tab.selected\">\n                <a href=\"#\">\n                    <span class=\"ui-tabview-left-icon fa\" [ngClass]=\"tab.leftIcon\" *ngIf=\"tab.leftIcon\"></span>\n                    <span class=\"ui-tabview-title\">{{tab.header}}</span>\n                    <span class=\"ui-tabview-right-icon fa\" [ngClass]=\"tab.rightIcon\" *ngIf=\"tab.rightIcon\"></span>\n                </a>\n                <span *ngIf=\"tab.closable\" class=\"ui-tabview-close fa fa-close\" (click)=\"clickClose($event,tab)\"></span>\n            </li>\n        </template>\n    ",
+	    })
+	], TabViewNav);
+	exports.TabViewNav = TabViewNav;
+	var TabPanel = (function () {
+	    function TabPanel() {
+	    }
+	    return TabPanel;
+	}());
+	__decorate([
+	    core_1.Input(),
+	    __metadata("design:type", String)
+	], TabPanel.prototype, "header", void 0);
+	__decorate([
+	    core_1.Input(),
+	    __metadata("design:type", Boolean)
+	], TabPanel.prototype, "selected", void 0);
+	__decorate([
+	    core_1.Input(),
+	    __metadata("design:type", Boolean)
+	], TabPanel.prototype, "disabled", void 0);
+	__decorate([
+	    core_1.Input(),
+	    __metadata("design:type", Boolean)
+	], TabPanel.prototype, "closable", void 0);
+	__decorate([
+	    core_1.Input(),
+	    __metadata("design:type", Object)
+	], TabPanel.prototype, "headerStyle", void 0);
+	__decorate([
+	    core_1.Input(),
+	    __metadata("design:type", String)
+	], TabPanel.prototype, "headerStyleClass", void 0);
+	__decorate([
+	    core_1.Input(),
+	    __metadata("design:type", String)
+	], TabPanel.prototype, "leftIcon", void 0);
+	__decorate([
+	    core_1.Input(),
+	    __metadata("design:type", String)
+	], TabPanel.prototype, "rightIcon", void 0);
+	TabPanel = __decorate([
+	    core_1.Component({
+	        selector: 'p-tabPanel',
+	        template: "\n        <div class=\"ui-tabview-panel ui-widget-content\" [style.display]=\"selected ? 'block' : 'none'\" \n            role=\"tabpanel\" [attr.aria-hidden]=\"!selected\" *ngIf=\"closed ? false :\u00A0(lazy ? selected : true)\">\n            <ng-content></ng-content>\n        </div>\n    "
+	    })
+	], TabPanel);
+	exports.TabPanel = TabPanel;
+	var TabView = (function () {
+	    function TabView(el) {
+	        this.el = el;
+	        this.orientation = 'top';
+	        this.onChange = new core_1.EventEmitter();
+	        this.onClose = new core_1.EventEmitter();
+	    }
+	    TabView.prototype.ngAfterContentInit = function () {
+	        var _this = this;
+	        this.initTabs();
+	        this.tabPanels.changes.subscribe(function (_) {
+	            _this.initTabs();
+	        });
+	    };
+	    TabView.prototype.initTabs = function () {
+	        this.tabs = this.tabPanels.toArray();
+	        for (var _i = 0, _a = this.tabs; _i < _a.length; _i++) {
+	            var tab = _a[_i];
+	            tab.lazy = this.lazy;
+	        }
+	        var selectedTab = this.findSelectedTab();
+	        if (!selectedTab && this.tabs.length) {
+	            this.tabs[0].selected = true;
+	        }
+	    };
+	    TabView.prototype.open = function (event, tab) {
+	        if (tab.disabled) {
+	            event.preventDefault();
+	            return;
+	        }
+	        if (!tab.selected) {
+	            var selectedTab = this.findSelectedTab();
+	            if (selectedTab) {
+	                selectedTab.selected = false;
+	            }
+	            tab.selected = true;
+	            this.onChange.emit({ originalEvent: event, index: this.findTabIndex(tab) });
+	        }
+	        event.preventDefault();
+	    };
+	    TabView.prototype.close = function (event, tab) {
+	        var _this = this;
+	        if (this.controlClose) {
+	            this.onClose.emit({
+	                originalEvent: event,
+	                index: this.findTabIndex(tab),
+	                close: function () {
+	                    _this.closeTab(tab);
+	                }
+	            });
+	        }
+	        else {
+	            this.closeTab(tab);
+	            this.onClose.emit({
+	                originalEvent: event,
+	                index: this.findTabIndex(tab)
+	            });
+	        }
+	        event.stopPropagation();
+	    };
+	    TabView.prototype.closeTab = function (tab) {
+	        if (tab.selected) {
+	            tab.selected = false;
+	            for (var i = 0; i < this.tabs.length; i++) {
+	                var tabPanel = this.tabs[i];
+	                if (!tabPanel.closed && !tab.disabled) {
+	                    tabPanel.selected = true;
+	                    break;
+	                }
+	            }
+	        }
+	        tab.closed = true;
+	    };
+	    TabView.prototype.findSelectedTab = function () {
+	        for (var i = 0; i < this.tabs.length; i++) {
+	            if (this.tabs[i].selected) {
+	                return this.tabs[i];
+	            }
+	        }
+	        return null;
+	    };
+	    TabView.prototype.findTabIndex = function (tab) {
+	        var index = -1;
+	        for (var i = 0; i < this.tabs.length; i++) {
+	            if (this.tabs[i] == tab) {
+	                index = i;
+	                break;
+	            }
+	        }
+	        return index;
+	    };
+	    TabView.prototype.getBlockableElement = function () {
+	        return this.el.nativeElement.children[0];
+	    };
+	    return TabView;
+	}());
+	__decorate([
+	    core_1.Input(),
+	    __metadata("design:type", String)
+	], TabView.prototype, "orientation", void 0);
+	__decorate([
+	    core_1.Input(),
+	    __metadata("design:type", Object)
+	], TabView.prototype, "style", void 0);
+	__decorate([
+	    core_1.Input(),
+	    __metadata("design:type", String)
+	], TabView.prototype, "styleClass", void 0);
+	__decorate([
+	    core_1.Input(),
+	    __metadata("design:type", Boolean)
+	], TabView.prototype, "controlClose", void 0);
+	__decorate([
+	    core_1.Input(),
+	    __metadata("design:type", Boolean)
+	], TabView.prototype, "lazy", void 0);
+	__decorate([
+	    core_1.ContentChildren(TabPanel),
+	    __metadata("design:type", core_1.QueryList)
+	], TabView.prototype, "tabPanels", void 0);
+	__decorate([
+	    core_1.Output(),
+	    __metadata("design:type", core_1.EventEmitter)
+	], TabView.prototype, "onChange", void 0);
+	__decorate([
+	    core_1.Output(),
+	    __metadata("design:type", core_1.EventEmitter)
+	], TabView.prototype, "onClose", void 0);
+	TabView = __decorate([
+	    core_1.Component({
+	        selector: 'p-tabView',
+	        template: "\n        <div [ngClass]=\"'ui-tabview ui-widget ui-widget-content ui-corner-all ui-tabview-' + orientation\" [ngStyle]=\"style\" [class]=\"styleClass\">\n            <ul p-tabViewNav role=\"tablist\" *ngIf=\"orientation!='bottom'\" [tabs]=\"tabs\" [orientation]=\"orientation\" \n                (onTabClick)=\"open($event.originalEvent, $event.tab)\" (onTabCloseClick)=\"close($event.originalEvent, $event.tab)\"></ul>\n            <div class=\"ui-tabview-panels\">\n                <ng-content></ng-content>\n            </div>\n            <ul p-tabViewNav role=\"tablist\" *ngIf=\"orientation=='bottom'\" [tabs]=\"tabs\" [orientation]=\"orientation\"\n                (onTabClick)=\"open($event.originalEvent, $event.tab)\" (onTabCloseClick)=\"close($event.originalEvent, $event.tab)\"></ul>\n        </div>\n    ",
+	    }),
+	    __metadata("design:paramtypes", [core_1.ElementRef])
+	], TabView);
+	exports.TabView = TabView;
+	var TabViewModule = (function () {
+	    function TabViewModule() {
+	    }
+	    return TabViewModule;
+	}());
+	TabViewModule = __decorate([
+	    core_1.NgModule({
+	        imports: [common_1.CommonModule],
+	        exports: [TabView, TabPanel, TabViewNav],
+	        declarations: [TabView, TabPanel, TabViewNav]
+	    })
+	], TabViewModule);
+	exports.TabViewModule = TabViewModule;
+
+
+/***/ },
+
+/***/ 74:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	Object.defineProperty(exports, "__esModule", { value: true });
+	var core_1 = __webpack_require__(3);
+	var DomHandler = (function () {
+	    function DomHandler() {
+	    }
+	    DomHandler.prototype.addClass = function (element, className) {
+	        if (element.classList)
+	            element.classList.add(className);
+	        else
+	            element.className += ' ' + className;
+	    };
+	    DomHandler.prototype.addMultipleClasses = function (element, className) {
+	        if (element.classList) {
+	            var styles = className.split(' ');
+	            for (var i = 0; i < styles.length; i++) {
+	                element.classList.add(styles[i]);
+	            }
+	        }
+	        else {
+	            var styles = className.split(' ');
+	            for (var i = 0; i < styles.length; i++) {
+	                element.className += ' ' + styles[i];
+	            }
+	        }
+	    };
+	    DomHandler.prototype.removeClass = function (element, className) {
+	        if (element.classList)
+	            element.classList.remove(className);
+	        else
+	            element.className = element.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+	    };
+	    DomHandler.prototype.hasClass = function (element, className) {
+	        if (element.classList)
+	            return element.classList.contains(className);
+	        else
+	            return new RegExp('(^| )' + className + '( |$)', 'gi').test(element.className);
+	    };
+	    DomHandler.prototype.siblings = function (element) {
+	        return Array.prototype.filter.call(element.parentNode.children, function (child) {
+	            return child !== element;
+	        });
+	    };
+	    DomHandler.prototype.find = function (element, selector) {
+	        return element.querySelectorAll(selector);
+	    };
+	    DomHandler.prototype.findSingle = function (element, selector) {
+	        return element.querySelector(selector);
+	    };
+	    DomHandler.prototype.index = function (element) {
+	        var children = element.parentNode.childNodes;
+	        var num = 0;
+	        for (var i = 0; i < children.length; i++) {
+	            if (children[i] == element)
+	                return num;
+	            if (children[i].nodeType == 1)
+	                num++;
+	        }
+	        return -1;
+	    };
+	    DomHandler.prototype.relativePosition = function (element, target) {
+	        var elementDimensions = element.offsetParent ? { width: element.outerWidth, height: element.outerHeight } : this.getHiddenElementDimensions(element);
+	        var targetHeight = target.offsetHeight;
+	        var targetWidth = target.offsetWidth;
+	        var targetOffset = target.getBoundingClientRect();
+	        var viewport = this.getViewport();
+	        var top, left;
+	        if ((targetOffset.top + targetHeight + elementDimensions.height) > viewport.height)
+	            top = -1 * (elementDimensions.height);
+	        else
+	            top = targetHeight;
+	        if ((targetOffset.left + elementDimensions.width) > viewport.width)
+	            left = targetWidth - elementDimensions.width;
+	        else
+	            left = 0;
+	        element.style.top = top + 'px';
+	        element.style.left = left + 'px';
+	    };
+	    DomHandler.prototype.absolutePosition = function (element, target) {
+	        var elementDimensions = element.offsetParent ? { width: element.offsetWidth, height: element.offsetHeight } : this.getHiddenElementDimensions(element);
+	        var elementOuterHeight = elementDimensions.height;
+	        var elementOuterWidth = elementDimensions.width;
+	        var targetOuterHeight = target.offsetHeight;
+	        var targetOuterWidth = target.offsetWidth;
+	        var targetOffset = target.getBoundingClientRect();
+	        var windowScrollTop = this.getWindowScrollTop();
+	        var windowScrollLeft = this.getWindowScrollLeft();
+	        var viewport = this.getViewport();
+	        var top, left;
+	        if (targetOffset.top + targetOuterHeight + elementOuterHeight > viewport.height)
+	            top = targetOffset.top + windowScrollTop - elementOuterHeight;
+	        else
+	            top = targetOuterHeight + targetOffset.top + windowScrollTop;
+	        if (targetOffset.left + targetOuterWidth + elementOuterWidth > viewport.width)
+	            left = targetOffset.left + windowScrollLeft + targetOuterWidth - elementOuterWidth;
+	        else
+	            left = targetOffset.left + windowScrollLeft;
+	        element.style.top = top + 'px';
+	        element.style.left = left + 'px';
+	    };
+	    DomHandler.prototype.getHiddenElementOuterHeight = function (element) {
+	        element.style.visibility = 'hidden';
+	        element.style.display = 'block';
+	        var elementHeight = element.offsetHeight;
+	        element.style.display = 'none';
+	        element.style.visibility = 'visible';
+	        return elementHeight;
+	    };
+	    DomHandler.prototype.getHiddenElementOuterWidth = function (element) {
+	        element.style.visibility = 'hidden';
+	        element.style.display = 'block';
+	        var elementWidth = element.offsetWidth;
+	        element.style.display = 'none';
+	        element.style.visibility = 'visible';
+	        return elementWidth;
+	    };
+	    DomHandler.prototype.getHiddenElementDimensions = function (element) {
+	        var dimensions = {};
+	        element.style.visibility = 'hidden';
+	        element.style.display = 'block';
+	        dimensions.width = element.offsetWidth;
+	        dimensions.height = element.offsetHeight;
+	        element.style.display = 'none';
+	        element.style.visibility = 'visible';
+	        return dimensions;
+	    };
+	    DomHandler.prototype.scrollInView = function (container, item) {
+	        var borderTopValue = getComputedStyle(container).getPropertyValue('borderTopWidth');
+	        var borderTop = borderTopValue ? parseFloat(borderTopValue) : 0;
+	        var paddingTopValue = getComputedStyle(container).getPropertyValue('paddingTop');
+	        var paddingTop = paddingTopValue ? parseFloat(paddingTopValue) : 0;
+	        var containerRect = container.getBoundingClientRect();
+	        var itemRect = item.getBoundingClientRect();
+	        var offset = (itemRect.top + document.body.scrollTop) - (containerRect.top + document.body.scrollTop) - borderTop - paddingTop;
+	        var scroll = container.scrollTop;
+	        var elementHeight = container.clientHeight;
+	        var itemHeight = this.getOuterHeight(item);
+	        if (offset < 0) {
+	            container.scrollTop = scroll + offset;
+	        }
+	        else if ((offset + itemHeight) > elementHeight) {
+	            container.scrollTop = scroll + offset - elementHeight + itemHeight;
+	        }
+	    };
+	    DomHandler.prototype.fadeIn = function (element, duration) {
+	        element.style.opacity = 0;
+	        var last = +new Date();
+	        var opacity = 0;
+	        var tick = function () {
+	            opacity = +element.style.opacity + (new Date().getTime() - last) / duration;
+	            element.style.opacity = opacity;
+	            last = +new Date();
+	            if (+opacity < 1) {
+	                (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+	            }
+	        };
+	        tick();
+	    };
+	    DomHandler.prototype.fadeOut = function (element, ms) {
+	        var opacity = 1, interval = 50, duration = ms, gap = interval / duration;
+	        var fading = setInterval(function () {
+	            opacity = opacity - gap;
+	            if (opacity <= 0) {
+	                opacity = 0;
+	                clearInterval(fading);
+	            }
+	            element.style.opacity = opacity;
+	        }, interval);
+	    };
+	    DomHandler.prototype.getWindowScrollTop = function () {
+	        var doc = document.documentElement;
+	        return (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
+	    };
+	    DomHandler.prototype.getWindowScrollLeft = function () {
+	        var doc = document.documentElement;
+	        return (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0);
+	    };
+	    DomHandler.prototype.matches = function (element, selector) {
+	        var p = Element.prototype;
+	        var f = p['matches'] || p.webkitMatchesSelector || p['mozMatchesSelector'] || p.msMatchesSelector || function (s) {
+	            return [].indexOf.call(document.querySelectorAll(s), this) !== -1;
+	        };
+	        return f.call(element, selector);
+	    };
+	    DomHandler.prototype.getOuterWidth = function (el, margin) {
+	        var width = el.offsetWidth;
+	        if (margin) {
+	            var style = getComputedStyle(el);
+	            width += parseFloat(style.marginLeft) + parseFloat(style.marginRight);
+	        }
+	        return width;
+	    };
+	    DomHandler.prototype.getHorizontalPadding = function (el) {
+	        var style = getComputedStyle(el);
+	        return parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
+	    };
+	    DomHandler.prototype.getHorizontalMargin = function (el) {
+	        var style = getComputedStyle(el);
+	        return parseFloat(style.marginLeft) + parseFloat(style.marginRight);
+	    };
+	    DomHandler.prototype.innerWidth = function (el) {
+	        var width = el.offsetWidth;
+	        var style = getComputedStyle(el);
+	        width += parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
+	        return width;
+	    };
+	    DomHandler.prototype.width = function (el) {
+	        var width = el.offsetWidth;
+	        var style = getComputedStyle(el);
+	        width -= parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
+	        return width;
+	    };
+	    DomHandler.prototype.getOuterHeight = function (el, margin) {
+	        var height = el.offsetHeight;
+	        if (margin) {
+	            var style = getComputedStyle(el);
+	            height += parseFloat(style.marginTop) + parseFloat(style.marginBottom);
+	        }
+	        return height;
+	    };
+	    DomHandler.prototype.getHeight = function (el) {
+	        var height = el.offsetHeight;
+	        var style = getComputedStyle(el);
+	        height -= parseFloat(style.paddingTop) + parseFloat(style.paddingBottom) + parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth);
+	        return height;
+	    };
+	    DomHandler.prototype.getWidth = function (el) {
+	        var width = el.offsetWidth;
+	        var style = getComputedStyle(el);
+	        width -= parseFloat(style.paddingLeft) + parseFloat(style.paddingRight) + parseFloat(style.borderLeftWidth) + parseFloat(style.borderRightWidth);
+	        return width;
+	    };
+	    DomHandler.prototype.getViewport = function () {
+	        var win = window, d = document, e = d.documentElement, g = d.getElementsByTagName('body')[0], w = win.innerWidth || e.clientWidth || g.clientWidth, h = win.innerHeight || e.clientHeight || g.clientHeight;
+	        return { width: w, height: h };
+	    };
+	    DomHandler.prototype.getOffset = function (el) {
+	        var x = el.offsetLeft;
+	        var y = el.offsetTop;
+	        while (el = el.offsetParent) {
+	            x += el.offsetLeft;
+	            y += el.offsetTop;
+	        }
+	        return { left: x, top: y };
+	    };
+	    DomHandler.prototype.equals = function (obj1, obj2) {
+	        if (obj1 == null && obj2 == null) {
+	            return true;
+	        }
+	        if (obj1 == null || obj2 == null) {
+	            return false;
+	        }
+	        if (obj1 == obj2) {
+	            delete obj1._$visited;
+	            return true;
+	        }
+	        if (typeof obj1 == 'object' && typeof obj2 == 'object') {
+	            obj1._$visited = true;
+	            for (var p in obj1) {
+	                if (p === "_$visited")
+	                    continue;
+	                if (obj1.hasOwnProperty(p) !== obj2.hasOwnProperty(p)) {
+	                    return false;
+	                }
+	                switch (typeof (obj1[p])) {
+	                    case 'object':
+	                        if (obj1[p] && obj1[p]._$visited || !this.equals(obj1[p], obj2[p]))
+	                            return false;
+	                        break;
+	                    case 'function':
+	                        if (typeof (obj2[p]) == 'undefined' || (p != 'compare' && obj1[p].toString() != obj2[p].toString()))
+	                            return false;
+	                        break;
+	                    default:
+	                        if (obj1[p] != obj2[p])
+	                            return false;
+	                        break;
+	                }
+	            }
+	            for (var p in obj2) {
+	                if (typeof (obj1[p]) == 'undefined')
+	                    return false;
+	            }
+	            delete obj1._$visited;
+	            return true;
+	        }
+	        return false;
+	    };
+	    DomHandler.prototype.getUserAgent = function () {
+	        return navigator.userAgent;
+	    };
+	    DomHandler.prototype.isIE = function () {
+	        var ua = window.navigator.userAgent;
+	        var msie = ua.indexOf('MSIE ');
+	        if (msie > 0) {
+	            // IE 10 or older => return version number
+	            return true;
+	        }
+	        var trident = ua.indexOf('Trident/');
+	        if (trident > 0) {
+	            // IE 11 => return version number
+	            var rv = ua.indexOf('rv:');
+	            return true;
+	        }
+	        var edge = ua.indexOf('Edge/');
+	        if (edge > 0) {
+	            // Edge (IE 12+) => return version number
+	            return true;
+	        }
+	        // other browser
+	        return false;
+	    };
+	    DomHandler.prototype.appendChild = function (element, target) {
+	        if (this.isElement(target))
+	            target.appendChild(element);
+	        else if (target.el && target.el.nativeElement)
+	            target.el.nativeElement.appendChild(element);
+	        else
+	            throw 'Cannot append ' + target + ' to ' + element;
+	    };
+	    DomHandler.prototype.removeChild = function (element, target) {
+	        if (this.isElement(target))
+	            target.removeChild(element);
+	        else if (target.el && target.el.nativeElement)
+	            target.el.nativeElement.removeChild(element);
+	        else
+	            throw 'Cannot remove ' + element + ' from ' + target;
+	    };
+	    DomHandler.prototype.isElement = function (obj) {
+	        return (typeof HTMLElement === "object" ? obj instanceof HTMLElement :
+	            obj && typeof obj === "object" && obj !== null && obj.nodeType === 1 && typeof obj.nodeName === "string");
+	    };
+	    DomHandler.prototype.calculateScrollbarWidth = function () {
+	        var scrollDiv = document.createElement("div");
+	        scrollDiv.className = "ui-scrollbar-measure";
+	        document.body.appendChild(scrollDiv);
+	        var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+	        document.body.removeChild(scrollDiv);
+	        return scrollbarWidth;
+	    };
+	    return DomHandler;
+	}());
+	DomHandler.zindex = 1000;
+	DomHandler = __decorate([
+	    core_1.Injectable()
+	], DomHandler);
+	exports.DomHandler = DomHandler;
+
+
+/***/ },
+
+/***/ 128:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	Object.defineProperty(exports, "__esModule", { value: true });
+	var core_1 = __webpack_require__(3);
+	var common_1 = __webpack_require__(27);
+	var contextmenudemo_1 = __webpack_require__(129);
+	var contextmenudemo_routing_module_1 = __webpack_require__(130);
+	var contextmenu_1 = __webpack_require__(131);
+	var tabview_1 = __webpack_require__(72);
+	var codehighlighter_1 = __webpack_require__(63);
+	var ContextMenuDemoModule = (function () {
+	    function ContextMenuDemoModule() {
+	    }
+	    return ContextMenuDemoModule;
+	}());
+	ContextMenuDemoModule = __decorate([
+	    core_1.NgModule({
+	        imports: [
+	            common_1.CommonModule,
+	            contextmenudemo_routing_module_1.ContextMenuDemoRoutingModule,
+	            contextmenu_1.ContextMenuModule,
+	            tabview_1.TabViewModule,
+	            codehighlighter_1.CodeHighlighterModule
+	        ],
+	        declarations: [
+	            contextmenudemo_1.ContextMenuDemo
+	        ]
+	    })
+	], ContextMenuDemoModule);
+	exports.ContextMenuDemoModule = ContextMenuDemoModule;
+
+
+/***/ },
+
+/***/ 129:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	Object.defineProperty(exports, "__esModule", { value: true });
+	var core_1 = __webpack_require__(3);
+	var ContextMenuDemo = (function () {
+	    function ContextMenuDemo() {
+	    }
+	    ContextMenuDemo.prototype.ngOnInit = function () {
+	        this.items = [
+	            {
+	                label: 'File',
+	                icon: 'fa-file-o',
+	                items: [{
+	                        label: 'New',
+	                        icon: 'fa-plus',
+	                        items: [
+	                            { label: 'Project' },
+	                            { label: 'Other' },
+	                        ]
+	                    },
+	                    { label: 'Open' },
+	                    { label: 'Quit' }
+	                ]
+	            },
+	            {
+	                label: 'Edit',
+	                icon: 'fa-edit',
+	                items: [
+	                    { label: 'Undo', icon: 'fa-mail-forward' },
+	                    { label: 'Redo', icon: 'fa-mail-reply' }
+	                ]
+	            },
+	            {
+	                label: 'Help',
+	                icon: 'fa-question',
+	                items: [
+	                    {
+	                        label: 'Contents'
+	                    },
+	                    {
+	                        label: 'Search',
+	                        icon: 'fa-search',
+	                        items: [
+	                            {
+	                                label: 'Text',
+	                                items: [
+	                                    {
+	                                        label: 'Workspace'
+	                                    }
+	                                ]
+	                            },
+	                            {
+	                                label: 'File'
+	                            }
+	                        ]
+	                    }
+	                ]
+	            },
+	            {
+	                label: 'Actions',
+	                icon: 'fa-gear',
+	                items: [
+	                    {
+	                        label: 'Edit',
+	                        icon: 'fa-refresh',
+	                        items: [
+	                            { label: 'Save', icon: 'fa-save' },
+	                            { label: 'Update', icon: 'fa-save' },
+	                        ]
+	                    },
+	                    {
+	                        label: 'Other',
+	                        icon: 'fa-phone',
+	                        items: [
+	                            { label: 'Delete', icon: 'fa-minus' }
+	                        ]
+	                    }
+	                ]
+	            },
+	            {
+	                label: 'Quit', icon: 'fa-minus'
+	            }
+	        ];
+	    };
+	    return ContextMenuDemo;
+	}());
+	ContextMenuDemo = __decorate([
+	    core_1.Component({
+	        templateUrl: 'showcase/demo/contextmenu/contextmenudemo.html'
+	    })
+	], ContextMenuDemo);
+	exports.ContextMenuDemo = ContextMenuDemo;
+
+
+/***/ },
+
+/***/ 130:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	Object.defineProperty(exports, "__esModule", { value: true });
+	var core_1 = __webpack_require__(3);
+	var router_1 = __webpack_require__(29);
+	var contextmenudemo_1 = __webpack_require__(129);
+	var ContextMenuDemoRoutingModule = (function () {
+	    function ContextMenuDemoRoutingModule() {
+	    }
+	    return ContextMenuDemoRoutingModule;
+	}());
+	ContextMenuDemoRoutingModule = __decorate([
+	    core_1.NgModule({
+	        imports: [
+	            router_1.RouterModule.forChild([
+	                { path: '', component: contextmenudemo_1.ContextMenuDemo }
+	            ])
+	        ],
+	        exports: [
+	            router_1.RouterModule
+	        ]
+	    })
+	], ContextMenuDemoRoutingModule);
+	exports.ContextMenuDemoRoutingModule = ContextMenuDemoRoutingModule;
+
+
+/***/ },
+
+/***/ 131:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var __param = (this && this.__param) || function (paramIndex, decorator) {
+	    return function (target, key) { decorator(target, key, paramIndex); }
+	};
+	Object.defineProperty(exports, "__esModule", { value: true });
+	var core_1 = __webpack_require__(3);
+	var common_1 = __webpack_require__(27);
+	var domhandler_1 = __webpack_require__(74);
+	var router_1 = __webpack_require__(29);
+	var ContextMenuSub = (function () {
+	    function ContextMenuSub(domHandler, router, contextMenu) {
+	        this.domHandler = domHandler;
+	        this.router = router;
+	        this.contextMenu = contextMenu;
+	    }
+	    ContextMenuSub.prototype.onItemMouseEnter = function (event, item, menuitem) {
+	        if (menuitem.disabled) {
+	            return;
+	        }
+	        this.activeItem = item;
+	        var nextElement = item.children[0].nextElementSibling;
+	        if (nextElement) {
+	            var sublist = nextElement.children[0];
+	            sublist.style.zIndex = ++domhandler_1.DomHandler.zindex;
+	            this.position(sublist, item);
+	        }
+	    };
+	    ContextMenuSub.prototype.onItemMouseLeave = function (event, link) {
+	        this.activeItem = null;
+	    };
+	    ContextMenuSub.prototype.itemClick = function (event, item) {
+	        if (item.disabled) {
+	            event.preventDefault();
+	            return;
+	        }
+	        if (!item.url || item.routerLink) {
+	            event.preventDefault();
+	        }
+	        if (item.command) {
+	            if (!item.eventEmitter) {
+	                item.eventEmitter = new core_1.EventEmitter();
+	                item.eventEmitter.subscribe(item.command);
+	            }
+	            item.eventEmitter.emit({
+	                originalEvent: event,
+	                item: item
+	            });
+	        }
+	        if (item.routerLink) {
+	            this.router.navigate(item.routerLink);
+	        }
+	    };
+	    ContextMenuSub.prototype.listClick = function (event) {
+	        this.activeItem = null;
+	    };
+	    ContextMenuSub.prototype.position = function (sublist, item) {
+	        this.containerLeft = this.domHandler.getOffset(item.parentElement);
+	        var viewport = this.domHandler.getViewport();
+	        var sublistWidth = sublist.offsetParent ? sublist.offsetWidth : this.domHandler.getHiddenElementOuterWidth(sublist);
+	        var itemOuterWidth = this.domHandler.getOuterWidth(item.children[0]);
+	        sublist.style.top = '0px';
+	        if ((parseInt(this.containerLeft.left) + itemOuterWidth + sublistWidth) > (viewport.width - this.calculateScrollbarWidth())) {
+	            sublist.style.left = -sublistWidth + 'px';
+	        }
+	        else {
+	            sublist.style.left = itemOuterWidth + 'px';
+	        }
+	    };
+	    ContextMenuSub.prototype.calculateScrollbarWidth = function () {
+	        var scrollDiv = document.createElement("div");
+	        scrollDiv.className = "ui-scrollbar-measure";
+	        document.body.appendChild(scrollDiv);
+	        var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+	        document.body.removeChild(scrollDiv);
+	        return scrollbarWidth;
+	    };
+	    return ContextMenuSub;
+	}());
+	__decorate([
+	    core_1.Input(),
+	    __metadata("design:type", Object)
+	], ContextMenuSub.prototype, "item", void 0);
+	__decorate([
+	    core_1.Input(),
+	    __metadata("design:type", Boolean)
+	], ContextMenuSub.prototype, "root", void 0);
+	ContextMenuSub = __decorate([
+	    core_1.Component({
+	        selector: 'p-contextMenuSub',
+	        template: "\n        <ul [ngClass]=\"{'ui-helper-reset':root, 'ui-widget-content ui-corner-all ui-helper-clearfix ui-menu-child ui-shadow':!root}\" class=\"ui-menu-list\"\n            (click)=\"listClick($event)\">\n            <template ngFor let-child [ngForOf]=\"(root ? item : item.items)\">\n                <li #item [ngClass]=\"{'ui-menuitem ui-widget ui-corner-all':true,'ui-menu-parent':child.items,'ui-menuitem-active':item==activeItem}\"\n                    (mouseenter)=\"onItemMouseEnter($event,item,child)\" (mouseleave)=\"onItemMouseLeave($event,item)\">\n                    <a [href]=\"child.url||'#'\" class=\"ui-menuitem-link ui-corner-all\" \n                        [ngClass]=\"{'ui-state-disabled':child.disabled}\" (click)=\"itemClick($event, child)\">\n                        <span class=\"ui-submenu-icon fa fa-fw fa-caret-right\" *ngIf=\"child.items\"></span>\n                        <span class=\"ui-menuitem-icon fa fa-fw\" *ngIf=\"child.icon\" [ngClass]=\"child.icon\"></span>\n                        <span class=\"ui-menuitem-text\">{{child.label}}</span>\n                    </a>\n                    <p-contextMenuSub class=\"ui-submenu\" [item]=\"child\" *ngIf=\"child.items\"></p-contextMenuSub>\n                </li>\n            </template>\n        </ul>\n    ",
+	        providers: [domhandler_1.DomHandler]
+	    }),
+	    __param(2, core_1.Inject(core_1.forwardRef(function () { return ContextMenu; }))),
+	    __metadata("design:paramtypes", [domhandler_1.DomHandler, router_1.Router, ContextMenu])
+	], ContextMenuSub);
+	exports.ContextMenuSub = ContextMenuSub;
+	var ContextMenu = (function () {
+	    function ContextMenu(el, domHandler, renderer) {
+	        this.el = el;
+	        this.domHandler = domHandler;
+	        this.renderer = renderer;
+	    }
+	    ContextMenu.prototype.ngAfterViewInit = function () {
+	        var _this = this;
+	        this.container = this.containerViewChild.nativeElement;
+	        this.documentClickListener = this.renderer.listenGlobal('body', 'click', function () {
+	            _this.hide();
+	        });
+	        if (this.global) {
+	            this.documentRightClickListener = this.renderer.listenGlobal('body', 'contextmenu', function (event) {
+	                _this.show(event);
+	                event.preventDefault();
+	            });
+	        }
+	        if (this.appendTo) {
+	            if (this.appendTo === 'body')
+	                document.body.appendChild(this.el.nativeElement);
+	            else
+	                this.domHandler.appendChild(this.el.nativeElement, this.appendTo);
+	        }
+	    };
+	    ContextMenu.prototype.show = function (event) {
+	        this.position(event);
+	        this.visible = true;
+	        this.domHandler.fadeIn(this.container, 250);
+	        if (event) {
+	            event.preventDefault();
+	        }
+	    };
+	    ContextMenu.prototype.hide = function () {
+	        this.visible = false;
+	    };
+	    ContextMenu.prototype.toggle = function (event) {
+	        if (this.visible)
+	            this.hide();
+	        else
+	            this.show(event);
+	    };
+	    ContextMenu.prototype.position = function (event) {
+	        if (event) {
+	            var left = event.pageX;
+	            var top_1 = event.pageY;
+	            var width = this.container.offsetParent ? this.container.offsetWidth : this.domHandler.getHiddenElementOuterWidth(this.container);
+	            var height = this.container.offsetParent ? this.container.offsetHeight : this.domHandler.getHiddenElementOuterHeight(this.container);
+	            var viewport = this.domHandler.getViewport();
+	            //flip
+	            if (left + width - document.body.scrollLeft > viewport.width) {
+	                left -= width;
+	            }
+	            //flip
+	            if (top_1 + height - document.body.scrollTop > viewport.height) {
+	                top_1 -= height;
+	            }
+	            //fit
+	            if (left < document.body.scrollLeft) {
+	                left = document.body.scrollLeft;
+	            }
+	            //fit
+	            if (top_1 < document.body.scrollTop) {
+	                top_1 = document.body.scrollTop;
+	            }
+	            this.container.style.left = left + 'px';
+	            this.container.style.top = top_1 + 'px';
+	        }
+	    };
+	    ContextMenu.prototype.unsubscribe = function (item) {
+	        if (item.eventEmitter) {
+	            item.eventEmitter.unsubscribe();
+	        }
+	        if (item.items) {
+	            for (var _i = 0, _a = item.items; _i < _a.length; _i++) {
+	                var childItem = _a[_i];
+	                this.unsubscribe(childItem);
+	            }
+	        }
+	    };
+	    ContextMenu.prototype.ngOnDestroy = function () {
+	        this.documentClickListener();
+	        if (this.global) {
+	            this.documentRightClickListener();
+	        }
+	        if (this.model) {
+	            for (var _i = 0, _a = this.model; _i < _a.length; _i++) {
+	                var item = _a[_i];
+	                this.unsubscribe(item);
+	            }
+	        }
+	        if (this.appendTo) {
+	            this.el.nativeElement.appendChild(this.container);
+	        }
+	    };
+	    return ContextMenu;
+	}());
+	__decorate([
+	    core_1.Input(),
+	    __metadata("design:type", Array)
+	], ContextMenu.prototype, "model", void 0);
+	__decorate([
+	    core_1.Input(),
+	    __metadata("design:type", Boolean)
+	], ContextMenu.prototype, "global", void 0);
+	__decorate([
+	    core_1.Input(),
+	    __metadata("design:type", Object)
+	], ContextMenu.prototype, "style", void 0);
+	__decorate([
+	    core_1.Input(),
+	    __metadata("design:type", String)
+	], ContextMenu.prototype, "styleClass", void 0);
+	__decorate([
+	    core_1.Input(),
+	    __metadata("design:type", Object)
+	], ContextMenu.prototype, "appendTo", void 0);
+	__decorate([
+	    core_1.ViewChild('container'),
+	    __metadata("design:type", core_1.ElementRef)
+	], ContextMenu.prototype, "containerViewChild", void 0);
+	ContextMenu = __decorate([
+	    core_1.Component({
+	        selector: 'p-contextMenu',
+	        template: "\n        <div #container [ngClass]=\"'ui-contextmenu ui-menu ui-widget ui-widget-content ui-corner-all ui-helper-clearfix ui-menu-dynamic ui-shadow'\" \n            [class]=\"styleClass\" [ngStyle]=\"style\" [style.display]=\"visible ? 'block' : 'none'\">\n            <p-contextMenuSub [item]=\"model\" root=\"root\"></p-contextMenuSub>\n        </div>\n    ",
+	        providers: [domhandler_1.DomHandler]
+	    }),
+	    __metadata("design:paramtypes", [core_1.ElementRef, domhandler_1.DomHandler, core_1.Renderer])
+	], ContextMenu);
+	exports.ContextMenu = ContextMenu;
+	var ContextMenuModule = (function () {
+	    function ContextMenuModule() {
+	    }
+	    return ContextMenuModule;
+	}());
+	ContextMenuModule = __decorate([
+	    core_1.NgModule({
+	        imports: [common_1.CommonModule],
+	        exports: [ContextMenu],
+	        declarations: [ContextMenu, ContextMenuSub]
+	    })
+	], ContextMenuModule);
+	exports.ContextMenuModule = ContextMenuModule;
+
+
+/***/ }
+
+});
