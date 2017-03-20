@@ -27,6 +27,7 @@ export declare class AutoComplete implements AfterViewInit, DoCheck, AfterViewCh
     scrollHeight: string;
     dropdown: boolean;
     multiple: boolean;
+    categorised: boolean;
     tabindex: number;
     templates: QueryList<any>;
     itemTemplate: TemplateRef<any>;
